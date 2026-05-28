@@ -4,7 +4,9 @@ const app = express()
 
 app.use(express.json())
 
-const VERIFY_TOKEN = "anext_verify_token"
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN
+
+const PORT = process.env.PORT || 3000
 
 app.get("/webhook", (req, res) => {
     const mode = req.query["hub.mode"]
@@ -42,6 +44,6 @@ app.post("/webhook", async (req, res) => {
     }
 })
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log("Webhook server running on port 3000")
 })
