@@ -8,17 +8,17 @@ const VERIFY_TOKEN = process.env.VERIFY_TOKEN
 
 const PORT = process.env.PORT || 3000
 
-app.get("/webhook", (req, res) => {
-    const mode = req.query["hub.mode"]
-    const token = req.query["hub.verify_token"]
-    const challenge = req.query["hub.challenge"]
+// app.get("/webhook", (req, res) => {
+//     const mode = req.query["hub.mode"]
+//     const token = req.query["hub.verify_token"]
+//     const challenge = req.query["hub.challenge"]
 
-    if (mode === "subscribe" && token === VERIFY_TOKEN) {
-        return res.status(200).send(challenge)
-    }
+//     if (mode === "subscribe" && token === VERIFY_TOKEN) {
+//         return res.status(200).send(challenge)
+//     }
 
-    return res.sendStatus(403)
-})
+//     return res.sendStatus(403)
+// })
 
 // app.post("/webhook", async (req, res) => {
 //     try {
@@ -44,16 +44,38 @@ app.get("/webhook", (req, res) => {
 //     }
 // })
 
-app.post("/webhook", (req, res) => {
-    console.log("WEBHOOK HIT")
-    console.log(JSON.stringify(req.body, null, 2))
-    res.sendStatus(200)
+// app.post("/webhook", (req, res) => {
+//     console.log("WEBHOOK HIT")
+//     console.log(JSON.stringify(req.body, null, 2))
+//     res.sendStatus(200)
+// })
+
+// app.post("/test", (req, res) => {
+//     console.log("TEST HIT")
+//     console.log(req.body)
+//     res.sendStatus(200)
+// })
+
+app.get("/webhook", (req, res) => {
+    console.log("GET WEBHOOK")
+    console.log(req.query)
+
+    const mode = req.query["hub.mode"]
+    const token = req.query["hub.verify_token"]
+    const challenge = req.query["hub.challenge"]
+
+    if (mode === "subscribe" && token === VERIFY_TOKEN) {
+        return res.status(200).send(challenge)
+    }
+
+    return res.sendStatus(403)
 })
 
-app.post("/test", (req, res) => {
-    console.log("TEST HIT")
-    console.log(req.body)
-    res.sendStatus(200)
+app.post("/webhook", (req, res) => {
+    console.log("POST WEBHOOK")
+    console.log(req.headers)
+    console.log(JSON.stringify(req.body, null, 2))
+    return res.sendStatus(200)
 })
 
 app.listen(PORT, () => {
