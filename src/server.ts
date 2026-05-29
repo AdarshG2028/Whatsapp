@@ -44,6 +44,12 @@ app.post("/webhook", async (req, res) => {
     }
 })
 
+app.post("/test", (req, res) => {
+    console.log("TEST HIT")
+    console.log(req.body)
+    res.sendStatus(200)
+})
+
 app.listen(PORT, () => {
     console.log("Webhook server running on port 3000")
 })
