@@ -20,28 +20,34 @@ app.get("/webhook", (req, res) => {
     return res.sendStatus(403)
 })
 
-app.post("/webhook", async (req, res) => {
-    try {
-        console.log(JSON.stringify(req.body, null, 2))
+// app.post("/webhook", async (req, res) => {
+//     try {
+//         console.log(JSON.stringify(req.body, null, 2))
 
-        const message =
-            req.body?.entry?.[0]?.changes?.[0]?.value?.messages?.[0]
+//         const message =
+//             req.body?.entry?.[0]?.changes?.[0]?.value?.messages?.[0]
 
-        if (!message) {
-            return res.sendStatus(200)
-        }
+//         if (!message) {
+//             return res.sendStatus(200)
+//         }
 
-        const from = message.from
-        const text = message.text?.body
+//         const from = message.from
+//         const text = message.text?.body
 
-        console.log("From:", from)
-        console.log("Message:", text)
+//         console.log("From:", from)
+//         console.log("Message:", text)
 
-        return res.sendStatus(200)
-    } catch (err) {
-        console.error(err)
-        return res.sendStatus(500)
-    }
+//         return res.sendStatus(200)
+//     } catch (err) {
+//         console.error(err)
+//         return res.sendStatus(500)
+//     }
+// })
+
+app.post("/webhook", (req, res) => {
+    console.log("WEBHOOK HIT")
+    console.log(JSON.stringify(req.body, null, 2))
+    res.sendStatus(200)
 })
 
 app.post("/test", (req, res) => {
